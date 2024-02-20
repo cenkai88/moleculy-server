@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  wireguard:
+    image: linuxserver/wireguard
+    volumes:
+      - wireguard_config:/config
+      - /lib/modules:/lib/modules
+    environment:
+      SERVERURL: 69.234.222.189
+      SERVERPORT: 51820
+      PEERS: 1
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
