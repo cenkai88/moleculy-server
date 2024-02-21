@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  minio:
+    image: minio/minio
+    volumes:
+      - minio_data:/data
+    ports:
+      - 9000:9000
+      - 9091:9091
+    environment:
+      MINIO_ROOT_USER: ingsh
+      MINIO_ROOT_PASSWORD: $MINIO_ROOT_PASSWORD
+    command: server /data --console-address ":9091"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    
+  minio-init:
+    image: minio/mc
+    depends_on:
+      - minio
+    environment:
+      MINIO_SERVER: minio
+      MINIO_ROOT_USER: ingsh
+      MINIO_ROOT_PASSWORD: $MINIO_ROOT_PASSWORD
+      $MINIO_WEBHOOK_DOMAIN: test-api.moleculy.com
+    volumes:
+      - ./init:/init
+    entrypoint: /init/init.sh
+      
