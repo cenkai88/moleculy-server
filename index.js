@@ -41,4 +41,4 @@ console.table(components);
 ]));
 
 await vpnPrompt();
-await minioPrompt(envId);
+// await minioPrompt(envId);
