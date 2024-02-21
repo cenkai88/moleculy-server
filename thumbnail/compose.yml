@@ -3,6 +3,7 @@ version: "3"
 services:
   thumbnail:
     image: ingsh2022/thumbnail:latest
+    container_name: thumbnail
     ports:
       - 3001:3001
     restart: 

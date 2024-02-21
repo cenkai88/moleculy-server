@@ -56,7 +56,7 @@ export default async () => {
   });
 
   // compose up
-  const { stderr } = await exec(`sudo docker-compose up -d wireguard`);
-  if (stderr) throw new Error(stderr);
+  const { stderr, stdout } = await exec(`sudo docker-compose up -d wireguard`);
+  console.log(stderr, stdout);
   console.log(chalk.red.bold("0 ->>>>>>>>>>>>> VPN启动完成"));
 };
