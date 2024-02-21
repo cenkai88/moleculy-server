@@ -25,7 +25,7 @@ services:
     environment:
       MINIO_SERVER: minio
       MINIO_ROOT_USER: ingsh
-      MINIO_ROOT_PASSWORD: $MINIO_ROOT_PASSWORD
+      MINIO_ROOT_PASSWORD: ingsh
       $MINIO_WEBHOOK_DOMAIN: test-api.moleculy.com
     volumes:
       - ./init:/init
