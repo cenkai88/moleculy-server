@@ -1,0 +1,9 @@
+[Interface]
+Address = $VPN_IP
+PrivateKey = $VPN_PRIVATE_KEY
+
+[Peer]
+PublicKey = whlF0vQjzvPy3yb0kKSnIsnW5XDJrcttj3/IzhoS51I=
+Endpoint = 69.234.222.189:51820
+AllowedIPs = 10.7.0.1/24
+PersistentKeepalive = 25

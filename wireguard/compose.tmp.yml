@@ -11,8 +11,8 @@ services:
     restart: unless-stopped
     environment:
       TZ: Asia/Shanghai
-      PUID: 502
-      PGID: 20
+      PUID: $PUID
+      PGID: $PGID
     cap_add:
       - NET_ADMIN
       - SYS_MODULE

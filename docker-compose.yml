@@ -1,11 +1,6 @@
 version: '3'
 
 services:
-  nginx:
-    extends:
-      file: nginx/compose.yml
-      service: nginx
-
   minio:
     extends:
       file: minio/compose.yml
@@ -15,6 +10,22 @@ services:
     extends:
       file: wireguard/compose.yml
       service: wireguard
+
+  nginx:
+    extends:
+      file: nginx/compose.yml
+      service: nginx
+    depends_on:
+      - minio
+      - wireguard
+      
+  thumbnail:
+    extends:
+      file: thumbnail/compose.yml
+      service: thumbnail
+    depends_on:
+      - minio
+
 
 volumes:
   minio_data:

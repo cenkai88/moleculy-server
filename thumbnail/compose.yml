@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  thumbnail:
+    image: ingsh2022/thumbnail:latest
+    ports:
+      - 3001:3001
+    restart: 
+      always
+    environment:
+      KRATOS_URL: https://web.moleculy.com/api/.ory
+      ORI_NORMAL_BUCKET_NAME: mol-file-athena-lambda-prod-normal
+      ORI_FAV_BUCKET_NAME: mol-file-athena-lambda-prod-favorite
+      ORI_TEAM_NORMAL_BUCKET_NAME: mol-user-team-s3-prod-normal
+      ORI_TEAM_FAV_BUCKET_NAME: mol-user-team-s3-prod-favorite
+      ORI_PAPER_BUCKET_NAME: mol-paper-s3-prod
+      THUMBNAIL_BUCKET_NAME: mol-thumbnail-prod
+      MINIO_KEY: minioadmin
+      MINIO_SECRET: minioadmin
+      MINIO_ENDPOINT: http://localhost:9001
