@@ -1,5 +1,6 @@
 import inquirer from "inquirer";
 import { exec as execRaw } from "child_process";
+import fs from "fs";
 import util from "node:util";
 import chalk from "chalk";
 import ora from "ora";
@@ -24,6 +25,7 @@ export default async (envId) => {
       {
         type: "confirm",
         name: "confirm",
+        default: false,
         message: "当前已经存在minio实例，是否重新设置",
       },
     ]);
@@ -77,6 +79,9 @@ export default async (envId) => {
     filePath: "./minio/init/init.sh.template",
     outputPath: "./minio/init/init.sh",
   });
+
+  // set script as executable
+  fs.chmodSync("./minio/init/init.sh", 0o755);
 
   // compose up
   spinner.start("启动中...");

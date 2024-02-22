@@ -23,6 +23,7 @@ export default async () => {
       {
         type: "confirm",
         name: "confirm",
+        default: false,
         message: "当前VPN已经联通，是否重新设置",
       },
     ]);
