@@ -5,7 +5,7 @@ mc alias set minio http://localhost:9000 ingsh $MINIO_ROOT_PASSWORD
 
 #add user
 mc admin user add minio ingsh@dt $MINIO_DT_SECRET
-mc admin policy create minio adminPolicy ./policy.json
+mc admin policy create minio adminPolicy /init/policy.json
 mc admin policy attach minio adminPolicy --user ingsh@dt
 mc admin user svcacct add minio ingsh@dt
 
