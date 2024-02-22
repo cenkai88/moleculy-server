@@ -6,6 +6,11 @@ services:
       file: minio/compose.yml
       service: minio
 
+  minio-init:
+    extends:
+      file: minio/compose.yml
+      service: minio-init
+
   wireguard:
     extends:
       file: wireguard/compose.yml
