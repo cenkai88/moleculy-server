@@ -2,15 +2,11 @@ import inquirer from "inquirer";
 import figlet from "figlet";
 import chalk from "chalk";
 import hostile from "hostile";
-import { exec as execRaw } from "child_process";
-import util from "node:util";
 
 import vpnPrompt from "./cli/VPN.js";
 import minioPrompt from "./cli/minio.js";
 
 let envId;
-
-const exec = util.promisify(execRaw);
 
 console.log(figlet.textSync("MOLECULY - server"));
 console.log("内网程序安装引导，将安装启动以下服务：");
@@ -43,10 +39,6 @@ console.table(components);
     message: "当前环境ID",
   },
 ]));
-
-const { stdout: uid } = await exec(`id -u`);
-const { stdout: sudoUserId } = await exec(`id -u root`);
-process.seteuid(Number(sudoUserId.trim()));
 
 hostile.set("127.0.0.1", `minio-${envId}.moleculy.com`);
 hostile.set("127.0.0.1", `web-${envId}.moleculy.com`);
