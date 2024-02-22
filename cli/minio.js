@@ -35,6 +35,7 @@ export default async (envId) => {
       return;
     }
   } catch (err) {
+    spinner.stop();
     // proceed
   }
 

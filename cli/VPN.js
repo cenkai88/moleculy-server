@@ -34,6 +34,7 @@ export default async () => {
       return;
     }
   } catch (err) {
+    spinner.stop();
     // proceed
   }
 
