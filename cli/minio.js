@@ -109,6 +109,7 @@ export default async (envId) => {
   spinner.start("初始化minio中，等待minio health check...");
   await waitUntilMinioHealthy();
   console.log("minio health check完成");
+  spinner.stop(); 
 
   const { confirm } = await inquirer.prompt([
     {
@@ -120,7 +121,7 @@ export default async (envId) => {
 
   if (confirm) {
     const { stderr: stderrInit, stdout: stdoutInit } = await exec(
-      `sudo docker-compose up -d minio-init`
+      `sudo docker-compose up minio-init`
     );
     console.log(stderrInit, stdoutInit);
   }
