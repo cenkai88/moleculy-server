@@ -1,6 +1,6 @@
 #!/bin/sh
 # Configure MinIO client (mc)
-mc alias set minio http://localhost:9000 ingsh $MINIO_ROOT_PASSWORD
+mc alias set minio http://127.0.0.1:9000 ingsh $MINIO_ROOT_PASSWORD
 
 #add user
 mc admin user add minio ingsh@dt $MINIO_DT_SECRET
