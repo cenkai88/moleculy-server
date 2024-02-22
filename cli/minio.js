@@ -38,7 +38,6 @@ export default async (envId) => {
     );
     spinner.stop();
     console.log();
-    console.log(pingErr0, pingOut0);
     const { confirm } = await inquirer.prompt([
       {
         type: "confirm",
