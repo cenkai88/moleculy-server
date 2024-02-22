@@ -17,6 +17,7 @@ export default async () => {
       "ping -c 4 10.7.0.1"
     );
     spinner.stop();
+    console.log();
     console.log(pingErr0, pingOut0);
     const { confirm } = await inquirer.prompt([
       {
@@ -35,6 +36,8 @@ export default async () => {
   } catch (err) {
     // proceed
   }
+
+  console.log(chalk.blue.bold("0 ->>>>>>>>>>>>> 创建新wireguard实例"));
   const { ip } = await inquirer.prompt([
     {
       type: "input",

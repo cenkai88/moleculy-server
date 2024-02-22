@@ -10,13 +10,41 @@ const exec = util.promisify(execRaw);
 const spinner = ora();
 
 export default async (envId) => {
-  console.log("1 ->>>>>>>>>>>>> minio初始化：");
+  console.log("1 ->>>>>>>>>>>>> minio 初始化：");
 
+  spinner.start("尝试查看minio实例中...");
+  try {
+    const { stderr: pingErr0, stdout: pingOut0 } = await exec(
+      "curl -f http://localhost:9000/minio/health/live"
+    );
+    spinner.stop();
+    console.log();
+    console.log(pingErr0, pingOut0);
+    const { confirm } = await inquirer.prompt([
+      {
+        type: "confirm",
+        name: "confirm",
+        message: "当前已经存在minio实例，是否重新设置",
+      },
+    ]);
+    if (!confirm) {
+      spinner.stopAndPersist({
+        symbol: chalk.green("✔"),
+        text: chalk.green.bold("1 ->>>>>>>>>>>>> minio 启动完成"),
+      });
+      return;
+    }
+  } catch (err) {
+    // proceed
+  }
+
+  console.log(chalk.blue.bold("1 ->>>>>>>>>>>>> 创建新minio实例"));
   const password = randomize("Aa0", 12);
   const passwordForApi = randomize("Aa0", 20);
 
   console.log(chalk.red.bold("用户名: ") + "ingsh");
   console.log(chalk.red.bold("密码: ") + password);
+  console.log();
   console.log(chalk.red.bold("ingsh@dt密码: ") + passwordForApi);
 
   await inquirer.prompt([
@@ -51,7 +79,7 @@ export default async (envId) => {
 
   // compose up
   spinner.start("启动中...");
-  const { stderr, stdout } = await exec(`sudo docker-compose up minio`);
+  const { stderr, stdout } = await exec(`sudo docker-compose up minio minio_init`);
   console.log(stderr, stdout);
   spinner.stopAndPersist({
     symbol: chalk.green("✔"),
