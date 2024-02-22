@@ -21,7 +21,7 @@ services:
     
   minio-init:
     image: minio/mc
-    container_name: minio_init
+    container_name: minio-init
     depends_on:
       - minio
     environment:

@@ -80,7 +80,7 @@ export default async (envId) => {
 
   // compose up
   spinner.start("启动中...");
-  const { stderr, stdout } = await exec(`sudo docker-compose up minio minio_init`);
+  const { stderr, stdout } = await exec(`sudo docker-compose up minio minio-init`);
   console.log(stderr, stdout);
   spinner.stopAndPersist({
     symbol: chalk.green("✔"),
