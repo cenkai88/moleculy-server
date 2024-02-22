@@ -49,8 +49,6 @@ hostile.set("127.0.0.1", `ws-${envId}.moleculy.com`);
 hostile.set("127.0.0.1", `cms-${envId}.moleculy.com`);
 hostile.set("127.0.0.1", `thumbnail-${envId}.moleculy.com`);
 
-process.seteuid(Number(uid.trim()));
-
 console.log("设置DNS完成");
 
 await vpnPrompt();
