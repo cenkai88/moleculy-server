@@ -1,11 +1,5 @@
 #!/bin/sh
 
-# Wait for MinIO server to be healthy
-until curl -sSf http://localhost:9000/minio/health/live; do
-  echo '等待 minio 服务器启动...'
-  sleep 5
-done
-
 # Configure MinIO client (mc)
 mc alias set minio http://localhost:9000 ingsh $MINIO_ROOT_PASSWORD
 

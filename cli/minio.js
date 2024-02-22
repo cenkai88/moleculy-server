@@ -10,6 +10,24 @@ import { updateFile } from "./utils.js";
 const exec = util.promisify(execRaw);
 const spinner = ora();
 
+const waitUntilMinioHealthy = async () =>
+  new Promise((resolve, reject) => {
+    let count = 1;
+    const t = setInterval(async () => {
+      if (count > 20) {
+        console.error("minio health check失败");
+        reject();
+      }
+      try {
+        await exec(`curl -sSf http://localhost:9000/minio/health/live`);
+        clearInterval(t);
+        resolve();
+      } catch (err) {
+        count += 1;
+      }
+    }, 1000);
+  });
+
 export default async (envId) => {
   console.log("1 ->>>>>>>>>>>>> minio 初始化：");
 
@@ -85,10 +103,20 @@ export default async (envId) => {
 
   // compose up
   spinner.start("启动中...");
-  const { stderr, stdout } = await exec(`sudo docker-compose up minio minio-init`);
+  const { stderr, stdout } = await exec(`sudo docker-compose up minio`);
   console.log(stderr, stdout);
+  console.log(chalk.blue.bold("1 ->>>>>>>>>>>>> minio 实例启动完成"));
+
+  spinner.start("初始化minio中，等待minio health check...");
+  await waitUntilMinioHealthy();
+  console.log("minio health check完成");
+
+  const { stderr: stderrInit, stdout: stdoutInit } = await exec(
+    `sudo docker-compose up minio-init`
+  );
+  console.log(stderrInit, stdoutInit);
   spinner.stopAndPersist({
     symbol: chalk.green("✔"),
-    text: chalk.green.bold("1 ->>>>>>>>>>>>> minio启动完成"),
+    text: chalk.green.bold("1 ->>>>>>>>>>>>> minio 实例初始化完成"),
   });
 };
