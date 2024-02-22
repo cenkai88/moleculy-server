@@ -110,10 +110,21 @@ export default async (envId) => {
   await waitUntilMinioHealthy();
   console.log("minio health check完成");
 
-  const { stderr: stderrInit, stdout: stdoutInit } = await exec(
-    `sudo docker-compose up -d minio-init`
-  );
-  console.log(stderrInit, stdoutInit);
+  const { confirm } = await inquirer.prompt([
+    {
+      type: "confirm",
+      name: "confirm",
+      message: "是否自动创建minio buckets / users / webhooks",
+    },
+  ]);
+
+  if (confirm) {
+    const { stderr: stderrInit, stdout: stdoutInit } = await exec(
+      `sudo docker-compose up -d minio-init`
+    );
+    console.log(stderrInit, stdoutInit);
+  }
+
   spinner.stopAndPersist({
     symbol: chalk.green("✔"),
     text: chalk.green.bold("1 ->>>>>>>>>>>>> minio 实例初始化完成"),

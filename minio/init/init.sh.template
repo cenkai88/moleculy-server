@@ -1,6 +1,4 @@
 #!/bin/sh
-until (mc config host add minio http://storage:9000 ingsh $MINIO_ROOT_PASSWORD) do echo '...waiting...' && sleep 1; done;
-
 # Configure MinIO client (mc)
 mc alias set minio http://localhost:9000 ingsh $MINIO_ROOT_PASSWORD
 
