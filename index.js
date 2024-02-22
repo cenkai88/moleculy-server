@@ -40,14 +40,14 @@ console.table(components);
   },
 ]));
 
-hostile.set('127.0.0.1', 'minio-0.moleculy.com');
-hostile.set('127.0.0.1', 'web-0.moleculy.com');
-hostile.set('127.0.0.1', 'api-0.moleculy.com');
-hostile.set('127.0.0.1', 'application-0.moleculy.com');
-hostile.set('127.0.0.1', 'app-api-0.moleculy.com');
-hostile.set('127.0.0.1', 'ws-0.moleculy.com');
-hostile.set('127.0.0.1', 'cms-0.moleculy.com');
-hostile.set('127.0.0.1', 'thumbnail-0.moleculy.com');
+hostile.set('127.0.0.1', `minio-${envId}.moleculy.com`);
+hostile.set('127.0.0.1', `web-${envId}.moleculy.com`);
+hostile.set('127.0.0.1', `api-${envId}.moleculy.com`);
+hostile.set('127.0.0.1', `application-${envId}.moleculy.com`);
+hostile.set('127.0.0.1', `app-api-${envId}.moleculy.com`);
+hostile.set('127.0.0.1', `ws-${envId}.moleculy.com`);
+hostile.set('127.0.0.1', `cms-${envId}.moleculy.com`);
+hostile.set('127.0.0.1', `thumbnail-${envId}.moleculy.com`);
 
 console.log('设置DNS完成');
 
