@@ -2,10 +2,12 @@ import inquirer from "inquirer";
 import { exec as execRaw } from "child_process";
 import util from "node:util";
 import chalk from "chalk";
+import ora from "ora";
 import randomize from "randomatic";
 import { updateFile } from "./utils.js";
 
 const exec = util.promisify(execRaw);
+const spinner = ora();
 
 export default async (envId) => {
   console.log("1 ->>>>>>>>>>>>> minio初始化：");
@@ -49,7 +51,7 @@ export default async (envId) => {
 
   // compose up
   spinner.start("启动中...");
-  const { stderr, stdout } = await exec(`sudo docker-compose up -d minio`);
+  const { stderr, stdout } = await exec(`sudo docker-compose up minio`);
   console.log(stderr, stdout);
   spinner.stopAndPersist({
     symbol: chalk.green("✔"),

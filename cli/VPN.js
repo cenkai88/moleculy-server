@@ -10,7 +10,31 @@ const exec = util.promisify(execRaw);
 const spinner = ora();
 
 export default async () => {
-  console.log("0 ->>>>>>>>>>>>> VPN初始化：\n");
+  console.log("0 ->>>>>>>>>>>>> VPN 初始化：\n");
+  spinner.start("测试VPN网络中...");
+  try {
+    const { stderr: pingErr0, stdout: pingOut0 } = await exec(
+      "ping -c 4 10.7.0.1"
+    );
+    spinner.stop();
+    console.log(pingErr0, pingOut0);
+    const { confirm } = await inquirer.prompt([
+      {
+        type: "confirm",
+        name: "confirm",
+        message: "当前VPN已经联通，是否重新设置",
+      },
+    ]);
+    if (!confirm) {
+      spinner.stopAndPersist({
+        symbol: chalk.green("✔"),
+        text: chalk.green.bold("0 ->>>>>>>>>>>>> VPN 启动完成"),
+      });
+      return;
+    }
+  } catch (err) {
+    // proceed
+  }
   const { ip } = await inquirer.prompt([
     {
       type: "input",
@@ -57,13 +81,15 @@ export default async () => {
     filePath: "./wireguard/config/wg0.template",
     outputPath: "./wireguard/config/wg0.conf",
   });
-  
+
   // compose up
   spinner.start("启动中...");
-  const { stderr, stdout } = await exec(`sudo docker-compose up -d wireguard`);
+  const { stderr, stdout } = await exec(`sudo docker-compose up wireguard`);
   console.log(stderr, stdout);
+  const { stderr: pingErr, stdout: pingOut } = await exec("ping -c 4 10.7.0.1");
+  console.log(pingErr, pingOut);
   spinner.stopAndPersist({
     symbol: chalk.green("✔"),
-    text: chalk.green.bold("0 ->>>>>>>>>>>>> VPN启动完成"),
+    text: chalk.green.bold("0 ->>>>>>>>>>>>> VPN 启动完成"),
   });
 };
