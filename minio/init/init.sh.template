@@ -2,12 +2,18 @@
 
 # Wait for MinIO server to be healthy
 until curl -sSf http://localhost:9000/minio/health/live; do
-  echo 'Waiting for MinIO server to be ready...'
+  echo '等待 minio 服务器启动...'
   sleep 5
 done
 
 # Configure MinIO client (mc)
 mc alias set minio http://localhost:9000 ingsh $MINIO_ROOT_PASSWORD
+
+#add user
+mc admin user add minio ingsh@dt $MINIO_DT_SECRET
+mc admin policy create minio adminPolicy ./policy.json
+mc admin policy attach minio adminPolicy --user ingsh@dt
+mc admin user svcacct add minio ingsh@dt
 
 # Create buckets
 mc mb minio/mol-file-athena-lambda-prod-favorite

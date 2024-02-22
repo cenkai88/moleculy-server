@@ -1,6 +1,4 @@
 import inquirer from "inquirer";
-import fs from "fs";
-import path from "path";
 import figlet from "figlet";
 
 import vpnPrompt from "./cli/VPN.js";
@@ -41,4 +39,4 @@ console.table(components);
 ]));
 
 await vpnPrompt();
-// await minioPrompt(envId);
+await minioPrompt(envId);
