@@ -89,7 +89,7 @@ export default async () => {
 
   // compose up
   spinner.start("启动中...");
-  const { stderr, stdout } = await exec(`sudo docker-compose up wireguard`);
+  const { stderr, stdout } = await exec(`sudo docker-compose up -d wireguard`);
   console.log(stderr, stdout);
   const { stderr: pingErr, stdout: pingOut } = await exec("ping -c 4 10.7.0.1");
   console.log(pingErr, pingOut);
