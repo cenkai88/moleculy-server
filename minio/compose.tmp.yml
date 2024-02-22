@@ -22,8 +22,6 @@ services:
   minio-init:
     image: minio/mc
     container_name: minio-init
-    depends_on:
-      - minio
     environment:
       MINIO_SERVER: minio
       MINIO_ROOT_USER: ingsh
