@@ -13,19 +13,19 @@ console.log("内网程序安装引导，将安装启动以下服务：");
 let components = [
   {
     service: "VPN",
-    status: chalk.gray("待部署"),
+    status: "待部署",
   },
   {
     service: "minio",
-    status: chalk.gray("待部署"),
+    status: "待部署",
   },
   {
     service: "nginx",
-    status: chalk.gray("待部署"),
+    status: "待部署",
   },
   {
     service: "thumbnail",
-    status: chalk.gray("待部署"),
+    status: "待部署",
   },
 ];
 
@@ -41,7 +41,7 @@ console.table(components);
 
 
 await vpnPrompt();
-components[0].status = chalk.green("OK");
+components[0].status = "OK";
 console.table(components);
 
 await minioPrompt(envId);
