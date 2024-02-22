@@ -46,7 +46,7 @@ console.table(components);
 
 const { stdout: uid } = await exec(`id -u`);
 const { stdout: sudoUserId } = await exec(`id -u root`);
-process.seteuid(sudoUserId);
+process.seteuid(Number(sudoUserId.trim()));
 
 hostile.set("127.0.0.1", `minio-${envId}.moleculy.com`);
 hostile.set("127.0.0.1", `web-${envId}.moleculy.com`);
@@ -57,7 +57,7 @@ hostile.set("127.0.0.1", `ws-${envId}.moleculy.com`);
 hostile.set("127.0.0.1", `cms-${envId}.moleculy.com`);
 hostile.set("127.0.0.1", `thumbnail-${envId}.moleculy.com`);
 
-process.seteuid(uid);
+process.seteuid(Number(uid.trim()));
 
 console.log("设置DNS完成");
 
