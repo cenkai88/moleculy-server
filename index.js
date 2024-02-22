@@ -1,5 +1,6 @@
 import inquirer from "inquirer";
 import figlet from "figlet";
+import chalk from "chalk";
 
 import vpnPrompt from "./cli/VPN.js";
 import minioPrompt from "./cli/minio.js";
@@ -12,19 +13,19 @@ console.log("内网程序安装引导，将安装启动以下服务：");
 let components = [
   {
     service: "VPN",
-    status: "OK",
+    status: chalk.gray("待部署"),
   },
   {
     service: "minio",
-    status: "OK",
+    status: chalk.gray("待部署"),
   },
   {
     service: "nginx",
-    status: "OK",
+    status: chalk.gray("待部署"),
   },
   {
     service: "thumbnail",
-    status: "OK",
+    status: chalk.gray("待部署"),
   },
 ];
 
@@ -38,5 +39,9 @@ console.table(components);
   },
 ]));
 
+
 await vpnPrompt();
+components[0].status = chalk.green("OK");
+console.table(components);
+
 await minioPrompt(envId);

@@ -3,6 +3,7 @@ import { exec as execRaw } from "child_process";
 import util from "node:util";
 import chalk from "chalk";
 import randomize from "randomatic";
+import { updateFile } from "./utils";
 
 const exec = util.promisify(execRaw);
 
