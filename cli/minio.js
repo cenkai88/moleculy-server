@@ -109,7 +109,7 @@ export default async (envId) => {
   spinner.start("初始化minio中，等待minio health check...");
   await waitUntilMinioHealthy();
   console.log("minio health check完成");
-  spinner.stop(); 
+  spinner.stop();
 
   const { confirm } = await inquirer.prompt([
     {
@@ -124,10 +124,16 @@ export default async (envId) => {
       `sudo docker-compose up minio-init`
     );
     console.log(stderrInit, stdoutInit);
-  }
+    spinner.stopAndPersist({
+      symbol: chalk.green("✔"),
+      text: chalk.green.bold("2 ->>>>>>>>>>>>> minio 实例初始化完成"),
+    });
 
-  spinner.stopAndPersist({
-    symbol: chalk.green("✔"),
-    text: chalk.green.bold("2 ->>>>>>>>>>>>> minio 实例初始化完成"),
-  });
+    const keys = extractKeys(stdoutInit);
+    if (keys) {
+      console.log(`ingsh@dt的凭证如下，请妥善保管`);
+      console.log(chalk.red.bold("Access Key:"), keys.accessKey);
+      console.log(chalk.red.bold("Secret Key:"), keys.secretKey);
+    }
+  }
 };

@@ -23,3 +23,18 @@ export const getIntranetIp = () => {
     }
   }
 };
+
+export const extractKeys = (output) => {
+  const accessKeyRegex = /Access Key: (\w+)/;
+  const secretKeyRegex = /Secret Key: (\w+)/;
+
+  const accessKeyMatch = output.match(accessKeyRegex);
+  const secretKeyMatch = output.match(secretKeyRegex);
+
+  if (accessKeyMatch && secretKeyMatch) {
+    return {
+      accessKey: accessKeyMatch[1],
+      secretKey: secretKeyMatch[1],
+    };
+  }
+};
