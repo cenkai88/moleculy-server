@@ -58,7 +58,7 @@ export default async (envId, localIp) => {
 
   // compose up
   spinner.start("启动中...");
-  const { stderr, stdout } = await exec(`sudo docker-compose up -d nginx -测`);
+  const { stderr, stdout } = await exec(`sudo docker-compose up -d nginx`);
   console.log(stderr, stdout);
   const { stderr: pingErr, stdout: pingOut } = await exec(
     `curl http://${localIp}`
