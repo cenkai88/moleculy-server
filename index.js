@@ -18,15 +18,27 @@ let components = [
     status: "待部署",
   },
   {
-    service: "nginx",
+    service: "Certificate Refresher",
     status: "待部署",
   },
   {
-    service: "minio",
+    service: "Nginx",
     status: "待部署",
   },
   {
-    service: "thumbnail",
+    service: "MinIO",
+    status: "待部署",
+  },
+  {
+    service: "blockchain node",
+    status: "待部署",
+  },
+  {
+    service: "thumbnail + blockchain API",
+    status: "待部署",
+  },
+  {
+    service: "Prometheus node-exporter",
     status: "待部署",
   },
 ];
@@ -56,8 +68,10 @@ await vpnPrompt();
 components[0].status = "OK";
 console.table(components);
 
+// ca
+
 await nginxPrompt(envId);
-components[1].status = "OK";
+components[2].status = "OK";
 console.table(components);
 
 await minioPrompt(envId);

@@ -10,7 +10,7 @@ const exec = util.promisify(execRaw);
 const spinner = ora();
 
 export default async (envId) => {
-  console.log("1 ->>>>>>>>>>>>> nginx 初始化：\n");
+  console.log("2 ->>>>>>>>>>>>> nginx 初始化：\n");
   spinner.start("测试nginx中...");
   try {
     const { stderr: stderr, stdout: stdout } = await exec(
@@ -30,7 +30,7 @@ export default async (envId) => {
       if (!confirm) {
         spinner.stopAndPersist({
           symbol: chalk.green("✔"),
-          text: chalk.green.bold("1 ->>>>>>>>>>>>> nginx 启动完成"),
+          text: chalk.green.bold("2 ->>>>>>>>>>>>> nginx 启动完成"),
         });
         return;
       }
@@ -40,7 +40,7 @@ export default async (envId) => {
     // proceed
   }
 
-  console.log(chalk.blue.bold("1 ->>>>>>>>>>>>> 创建新nginx实例"));
+  console.log(chalk.blue.bold("2 ->>>>>>>>>>>>> 创建新nginx实例"));
 
   // $ENV_ID: 环境的ID
   const placeholderMapping = {
@@ -64,6 +64,6 @@ export default async (envId) => {
   console.log(pingErr, pingOut);
   spinner.stopAndPersist({
     symbol: chalk.green("✔"),
-    text: chalk.green.bold("1 ->>>>>>>>>>>>> nginx 启动完成"),
+    text: chalk.green.bold("2 ->>>>>>>>>>>>> nginx 启动完成"),
   });
 };
