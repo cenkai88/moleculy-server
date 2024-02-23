@@ -13,7 +13,7 @@ export default async (envId, localIp) => {
   console.log("2 ->>>>>>>>>>>>> nginx 初始化：\n");
   spinner.start("测试nginx中...");
   try {
-    const { stdout: stdout } = await exec(`curl http://${localIp}`);
+    const { stdout: stdout } = await exec(`curl ${localIp}`);
     spinner.stop();
     console.log();
     if (stdout.trim() === "ok") {
@@ -59,7 +59,7 @@ export default async (envId, localIp) => {
   const { stderr, stdout } = await exec(`sudo docker-compose up -d nginx`);
   console.log(stderr, stdout);
   const { stderr: pingErr, stdout: pingOut } = await exec(
-    `curl http://${localIp}`
+    `curl ${localIp}`
   );
   console.log(pingErr, pingOut);
   spinner.stopAndPersist({

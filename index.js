@@ -54,8 +54,6 @@ console.table(components);
   },
 ]));
 
-console.log(getIntranetIp());
-
 const { ip } = await inquirer.prompt([
   {
     type: "input",
