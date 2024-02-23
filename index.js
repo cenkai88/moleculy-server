@@ -56,14 +56,14 @@ console.table(components);
 
 console.log(getIntranetIp());
 
-({ ip } = await inquirer.prompt([
+const { ip } = await inquirer.prompt([
   {
     type: "input",
     name: "ip",
     message: "请确认内网ip",
-    default: getIntranetIp()
+    default: getIntranetIp(),
   },
-]));
+]);
 
 hostile.set(ip, `minio-${envId}.moleculy.com`);
 hostile.set(ip, `web-${envId}.moleculy.com`);
@@ -89,4 +89,3 @@ console.table(components);
 await minioPrompt(envId);
 components[2].status = "OK";
 console.table(components);
-
