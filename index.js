@@ -54,12 +54,14 @@ console.table(components);
   },
 ]));
 
+console.log(getIntranetIp());
+
 ({ ip } = await inquirer.prompt([
   {
     type: "input",
     name: "ip",
     message: "请确认内网ip",
-    defautl: getIntranetIp()
+    default: getIntranetIp()
   },
 ]));
 
