@@ -4,6 +4,7 @@ import chalk from "chalk";
 import hostile from "hostile";
 
 import vpnPrompt from "./cli/VPN.js";
+import nginxPrompt from "./cli/nginx.js";
 import minioPrompt from "./cli/minio.js";
 
 let envId;
@@ -17,11 +18,11 @@ let components = [
     status: "待部署",
   },
   {
-    service: "minio",
+    service: "nginx",
     status: "待部署",
   },
   {
-    service: "nginx",
+    service: "minio",
     status: "待部署",
   },
   {
@@ -55,4 +56,11 @@ await vpnPrompt();
 components[0].status = "OK";
 console.table(components);
 
+await nginxPrompt(envId);
+components[1].status = "OK";
+console.table(components);
+
 await minioPrompt(envId);
+components[2].status = "OK";
+console.table(components);
+
