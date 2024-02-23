@@ -1,4 +1,5 @@
 import fs from "fs";
+import os from "os";
 
 export const updateFile = async ({
   placeholderMapping = {},
@@ -11,4 +12,14 @@ export const updateFile = async ({
     result = result.replaceAll(key, placeholderMapping[key]);
   });
   await fs.writeFileSync(outputPath, result, "utf-8");
+};
+
+export const getIntranetIp = () => {
+  const networkInterfaces = os.networkInterfaces();
+  for (const interfaceName in networkInterfaces) {
+    const addrList = networkInterfaces[interfaceName];
+    for (const addr of addrList) {
+      if (addr.family === "IPv4" && !addr.internal) return addr.address;
+    }
+  }
 };

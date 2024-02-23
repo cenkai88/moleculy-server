@@ -9,16 +9,16 @@ const exec = util.promisify(execRaw);
 
 const spinner = ora();
 
-export default async (envId) => {
+export default async (envId, localIp) => {
   console.log("2 ->>>>>>>>>>>>> nginx 初始化：\n");
   spinner.start("测试nginx中...");
   try {
     const { stderr: stderr, stdout: stdout } = await exec(
-      `systemctl is-active nginx`
+      `curl http://${localIp}`
     );
     spinner.stop();
     console.log();
-    if (stdout.trim() === "active") {
+    if (stdout.trim() === "ok") {
       const { confirm } = await inquirer.prompt([
         {
           type: "confirm",
@@ -43,7 +43,9 @@ export default async (envId) => {
   console.log(chalk.blue.bold("2 ->>>>>>>>>>>>> 创建新nginx实例"));
 
   // $ENV_ID: 环境的ID
+  // $LOCAL_IP: 机器内网IP
   const placeholderMapping = {
+    $LOCAL_IP: localIp,
     $ENV_ID: envId,
   };
 
@@ -56,10 +58,10 @@ export default async (envId) => {
 
   // compose up
   spinner.start("启动中...");
-  const { stderr, stdout } = await exec(`sudo docker-compose up -d nginx`);
+  const { stderr, stdout } = await exec(`sudo docker-compose up -d nginx -测`);
   console.log(stderr, stdout);
   const { stderr: pingErr, stdout: pingOut } = await exec(
-    "systemctl is-active nginx"
+    `curl http://${localIp}`
   );
   console.log(pingErr, pingOut);
   spinner.stopAndPersist({

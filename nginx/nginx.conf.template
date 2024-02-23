@@ -45,7 +45,7 @@ http {
 	server {
 		listen 80;
 
-		server_name 192.168.69.12;
+		server_name $LOCAL_IP;
 		location / {
 			return 200 'ok';
 		}

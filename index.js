@@ -6,6 +6,7 @@ import hostile from "hostile";
 import vpnPrompt from "./cli/VPN.js";
 import nginxPrompt from "./cli/nginx.js";
 import minioPrompt from "./cli/minio.js";
+import { getIntranetIp } from "./cli/utils.js";
 
 let envId;
 
@@ -53,14 +54,23 @@ console.table(components);
   },
 ]));
 
-hostile.set("127.0.0.1", `minio-${envId}.moleculy.com`);
-hostile.set("127.0.0.1", `web-${envId}.moleculy.com`);
-hostile.set("127.0.0.1", `api-${envId}.moleculy.com`);
-hostile.set("127.0.0.1", `application-${envId}.moleculy.com`);
-hostile.set("127.0.0.1", `app-api-${envId}.moleculy.com`);
-hostile.set("127.0.0.1", `ws-${envId}.moleculy.com`);
-hostile.set("127.0.0.1", `cms-${envId}.moleculy.com`);
-hostile.set("127.0.0.1", `thumbnail-${envId}.moleculy.com`);
+({ ip } = await inquirer.prompt([
+  {
+    type: "input",
+    name: "ip",
+    message: "请确认内网ip",
+    defautl: getIntranetIp()
+  },
+]));
+
+hostile.set(ip, `minio-${envId}.moleculy.com`);
+hostile.set(ip, `web-${envId}.moleculy.com`);
+hostile.set(ip, `api-${envId}.moleculy.com`);
+hostile.set(ip, `application-${envId}.moleculy.com`);
+hostile.set(ip, `app-api-${envId}.moleculy.com`);
+hostile.set(ip, `ws-${envId}.moleculy.com`);
+hostile.set(ip, `cms-${envId}.moleculy.com`);
+hostile.set(ip, `thumbnail-${envId}.moleculy.com`);
 
 console.log("设置DNS完成");
 
@@ -70,7 +80,7 @@ console.table(components);
 
 // ca
 
-await nginxPrompt(envId);
+await nginxPrompt(envId, ip);
 components[2].status = "OK";
 console.table(components);
 
