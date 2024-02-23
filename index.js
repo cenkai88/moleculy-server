@@ -87,5 +87,5 @@ components[2].status = "OK";
 console.table(components);
 
 await minioPrompt(envId);
-components[2].status = "OK";
+components[3].status = "OK";
 console.table(components);
