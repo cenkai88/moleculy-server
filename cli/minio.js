@@ -5,7 +5,7 @@ import util from "node:util";
 import chalk from "chalk";
 import ora from "ora";
 import randomize from "randomatic";
-import { updateFile } from "./utils.js";
+import { extractKeys, updateFile } from "./utils.js";
 
 const exec = util.promisify(execRaw);
 const spinner = ora();
