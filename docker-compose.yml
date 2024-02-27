@@ -32,6 +32,11 @@ services:
       service: thumbnail
     depends_on:
       - minio
+  
+  blockchain:
+    extends:
+      file: blockchain/compose.yml
+      service: blockchain
 
 
 volumes:
