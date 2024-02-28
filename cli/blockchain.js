@@ -3,7 +3,7 @@ import { exec as execRaw } from "child_process";
 import util from "node:util";
 import chalk from "chalk";
 import ora from "ora";
-import { extractBlockChainKeys } from "./utils";
+import { extractBlockChainKeys } from "./utils.js";
 // import { updateFile } from "./utils.js";
 
 const exec = util.promisify(execRaw);
