@@ -6,6 +6,8 @@ import hostile from "hostile";
 import vpnPrompt from "./cli/VPN.js";
 import nginxPrompt from "./cli/nginx.js";
 import minioPrompt from "./cli/minio.js";
+import blockchainPrompt from "./cli/blockchain.js";
+
 import { getIntranetIp } from "./cli/utils.js";
 
 let envId;
@@ -87,3 +89,9 @@ console.table(components);
 await minioPrompt(envId);
 components[3].status = "OK";
 console.table(components);
+
+await blockchainPrompt();
+components[4].status = "OK";
+console.table(components);
+
+console.log(chalk.greenBright.bold('✔ moleculy server初始化全部完成'));
