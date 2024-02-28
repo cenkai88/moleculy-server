@@ -38,3 +38,29 @@ export const extractKeys = (output) => {
     };
   }
 };
+
+export const extractBlockChainKeys = (output) => {
+  const aruaSecretRegex = /Aura Secret phrase: (\w+)/;
+  const auraAccountRegex = /Aura Account ID: (\w+)/;
+  const granSecretRegex = /Gran Secret phrase: (\w+)/;
+  const granAccountRegex = /Gran Account ID: (\w+)/;
+
+  const auraSecretMatch = output.match(aruaSecretRegex);
+  const auraAccountMatch = output.match(auraAccountRegex);
+  const granSecretMatch = output.match(granSecretRegex);
+  const granAccountMatch = output.match(granAccountRegex);
+
+  if (
+    auraSecretMatch &&
+    auraAccountMatch &&
+    granSecretMatch &&
+    granAccountMatch
+  ) {
+    return {
+      auraSecret: auraSecretMatch[1],
+      auraAccount: auraAccountMatch[1],
+      granSecret: granSecretMatch[1],
+      granAccount: granAccountMatch[1],
+    };
+  }
+};
