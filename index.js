@@ -94,4 +94,4 @@ await blockchainPrompt();
 components[4].status = "OK";
 console.table(components);
 
-console.log(chalk.greenBright.bold('✔ moleculy server初始化全部完成'));
+console.log(chalk.greenBright.bold('✔ moleculy server初始化全部完成，请检查443、80、30333端口是否已经放开'));

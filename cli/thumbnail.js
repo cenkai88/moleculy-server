@@ -11,7 +11,7 @@ const exec = util.promisify(execRaw);
 const spinner = ora();
 
 export default async (envId, localIp) => {
-  console.log("5 ->>>>>>>>>>>>> blockchain 初始化：\n");
+  console.log("4 ->>>>>>>>>>>>> blockchain 初始化：\n");
   spinner.start("测试blockchain中...");
   try {
     const { stdout: stdout } = await exec(`curl -X OPTIONS ${localIp}:9933`);
