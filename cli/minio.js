@@ -29,7 +29,7 @@ const waitUntilMinioHealthy = async () =>
   });
 
 export default async (envId) => {
-  console.log("2 ->>>>>>>>>>>>> minio 初始化：");
+  console.log("3 ->>>>>>>>>>>>> minio 初始化：");
 
   spinner.start("尝试查看minio实例中...");
   try {
@@ -49,7 +49,7 @@ export default async (envId) => {
     if (!confirm) {
       spinner.stopAndPersist({
         symbol: chalk.green("✔"),
-        text: chalk.green.bold("2 ->>>>>>>>>>>>> minio 启动完成"),
+        text: chalk.green.bold("3 ->>>>>>>>>>>>> minio 启动完成"),
       });
       return;
     }
@@ -58,7 +58,7 @@ export default async (envId) => {
     // proceed
   }
 
-  console.log(chalk.blue.bold("2 ->>>>>>>>>>>>> 创建新minio实例"));
+  console.log(chalk.blue.bold("3 ->>>>>>>>>>>>> 创建新minio实例"));
   const password = randomize("Aa0", 12);
   const passwordForApi = randomize("Aa0", 20);
 
@@ -104,7 +104,7 @@ export default async (envId) => {
   spinner.start("启动中...");
   const { stderr, stdout } = await exec(`sudo docker-compose up -d minio`);
   console.log(stderr, stdout);
-  console.log(chalk.blue.bold("2 ->>>>>>>>>>>>> minio 实例启动完成"));
+  console.log(chalk.blue.bold("3 ->>>>>>>>>>>>> minio 实例启动完成"));
 
   spinner.start("初始化minio中，等待minio health check...");
   await waitUntilMinioHealthy();
@@ -126,7 +126,7 @@ export default async (envId) => {
     console.log(stderrInit, stdoutInit);
     spinner.stopAndPersist({
       symbol: chalk.green("✔"),
-      text: chalk.green.bold("2 ->>>>>>>>>>>>> minio 实例初始化完成"),
+      text: chalk.green.bold("3 ->>>>>>>>>>>>> minio 实例初始化完成"),
     });
 
     const keys = extractKeys(stdoutInit);

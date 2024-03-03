@@ -1,6 +1,11 @@
 version: '3'
 
 services:
+  wireguard:
+    extends:
+      file: wireguard/compose.yml
+      service: wireguard
+
   minio:
     extends:
       file: minio/compose.yml
@@ -13,11 +18,6 @@ services:
     depends_on:
       - minio
 
-  wireguard:
-    extends:
-      file: wireguard/compose.yml
-      service: wireguard
-
   nginx:
     extends:
       file: nginx/compose.yml
@@ -25,19 +25,19 @@ services:
     depends_on:
       - minio
       - wireguard
-      
+  
+  blockchain:
+    extends:
+      file: blockchain/compose.yml
+      service: blockchain
+        
   thumbnail:
     extends:
       file: thumbnail/compose.yml
       service: thumbnail
     depends_on:
       - minio
-  
-  blockchain:
-    extends:
-      file: blockchain/compose.yml
-      service: blockchain
-
+      - blockchain
 
 volumes:
   minio_data:

@@ -2,13 +2,14 @@ version: '3'
 
 services:
   wireguard:
+    network_mode: host
     image: linuxserver/wireguard
     container_name: wireguard
     volumes:
       - ./config:/config
       - /lib/modules:/lib/modules
-    ports:
-      - 51820:51820/udp
+    # ports:
+    #   - 51820:51820/udp
     restart: unless-stopped
     environment:
       TZ: Asia/Shanghai
@@ -17,5 +18,5 @@ services:
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
-    sysctls:
-      - net.ipv4.conf.all.src_valid_mark=1
+    # sysctls:
+    #   - net.ipv4.conf.all.src_valid_mark=1

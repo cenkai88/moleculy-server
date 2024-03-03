@@ -11,7 +11,7 @@ const exec = util.promisify(execRaw);
 const spinner = ora();
 
 export default async (envId, localIp) => {
-  console.log("5 ->>>>>>>>>>>>> blockchain 初始化：\n");
+  console.log("4 ->>>>>>>>>>>>> blockchain 初始化：\n");
   spinner.start("测试blockchain中...");
   try {
     const { stdout: stdout } = await exec(`curl -X OPTIONS ${localIp}:9933`);
@@ -53,19 +53,31 @@ export default async (envId, localIp) => {
 
   // compose up
   spinner.start("启动中，blockchain的Image比较大，请耐心等待...");
-  const { stderr, stdout } = await exec(`sudo docker-compose up blockchain`);
+  await exec(`sudo docker-compose up -d blockchain`);
+  await exec(`sleep 5`);
+  const { stdout } = await exec(`sudo docker logs blockchain`);
   spinner.stopAndPersist({
     symbol: chalk.green("✔"),
     text: chalk.green.bold("4 ->>>>>>>>>>>>> blockchain 启动完成"),
   });
-  console.log(stderr, stdout);
   const { auraSecret, auraAccount, granSecret, granAccount } =
-    extractBlockChainKeys(stdoutInit);
-  if (keys) {
+    extractBlockChainKeys(stdout);
+
+  if (auraSecret && auraAccount && granSecret && granAccount) {
     console.log(`当前blockchain的凭证如下，请妥善保管`);
     console.log(chalk.red.bold("Aura Secret:"), auraSecret);
     console.log(chalk.red.bold("Aura Account:"), auraAccount);
     console.log(chalk.red.bold("Gran Secret:"), granSecret);
     console.log(chalk.red.bold("Gran Account:"), granAccount);
   }
+
+  // update phrase for blockchain API
+  const placeholderMapping = {
+    $BLOCKCHAIN_PHRASE: auraSecret
+  }
+  await updateFile({
+    placeholderMapping,
+    filePath: "./thumbnail/compose.tmp.yml",
+    outputPath: "./thumbnail/compose.yml",
+  });
 };

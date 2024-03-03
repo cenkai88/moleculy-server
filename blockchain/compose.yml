@@ -2,12 +2,13 @@ version: "3"
 
 services:
   blockchain:
+    network_mode: host
     image: ingsh2022/blockchain:latest
     container_name: blockchain
     volumes:
       - ./blockchain:/var/www/node-template/data
-    ports:
-      - 30333:30333
-      - 9945:9945
-      - 9933:9933
+    # ports:
+      # - 30333:30333
+      # - 9945:9945
+      # - 9933:9933
     

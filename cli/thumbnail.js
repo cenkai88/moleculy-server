@@ -11,28 +11,29 @@ const exec = util.promisify(execRaw);
 const spinner = ora();
 
 export default async (envId, localIp) => {
-  console.log("4 ->>>>>>>>>>>>> blockchain 初始化：\n");
-  spinner.start("测试blockchain中...");
+  console.log("5 ->>>>>>>>>>>>> thumbnail+blockchain API 初始化：\n");
+  spinner.start("测试 thumbnail+blockchain API 中...");
   try {
-    const { stdout: stdout } = await exec(`curl -X OPTIONS ${localIp}:9933`);
+    const { stdout: stdout } = await exec(
+      `curl http://${localIp}:3001/thumbnail/healthcheck`
+    );
     spinner.stop();
     console.log();
-    if (
-      stdout.trim() ===
-      `{"jsonrpc":"2.0","error":{"code":-32700,"message":"Parse error"},"id":null}`
-    ) {
+    if (stdout.trim() === "{ status: 'ok' }") {
       const { confirm } = await inquirer.prompt([
         {
           type: "confirm",
           name: "confirm",
           default: false,
-          message: "当前blockchain已经启动，是否重新设置",
+          message: "当前 thumbnail+blockchain API 已经启动，是否重新设置",
         },
       ]);
       if (!confirm) {
         spinner.stopAndPersist({
           symbol: chalk.green("✔"),
-          text: chalk.green.bold("4 ->>>>>>>>>>>>> blockchain 启动完成"),
+          text: chalk.green.bold(
+            "5 ->>>>>>>>>>>>> thumbnail+blockchain API 启动完成"
+          ),
         });
         return;
       }
@@ -42,7 +43,9 @@ export default async (envId, localIp) => {
     // proceed
   }
 
-  console.log(chalk.blue.bold("4 ->>>>>>>>>>>>> 创建新blockchain实例"));
+  console.log(
+    chalk.blue.bold("5 ->>>>>>>>>>>>> 创建新 thumbnail+blockchain API 实例")
+  );
 
   // update compose yml
   // await updateFile({
@@ -52,20 +55,17 @@ export default async (envId, localIp) => {
   // });
 
   // compose up
-  spinner.start("启动中，blockchain的Image比较大，请耐心等待...");
-  const { stderr, stdout } = await exec(`sudo docker-compose up blockchain`);
+  spinner.start("启动中...");
+  const { stderr, stdout } = await exec(`sudo docker-compose up -d thumbnail`);
+  console.log(stderr, stdout);
+  const { stderr: stderrCurl, stdout: stdoutCurl } = await exec(
+    `curl http://${localIp}:3001/thumbnail/healthcheck`
+  );
+  console.log(stderrCurl, stdoutCurl);
   spinner.stopAndPersist({
     symbol: chalk.green("✔"),
-    text: chalk.green.bold("4 ->>>>>>>>>>>>> blockchain 启动完成"),
+    text: chalk.green.bold(
+      "5 ->>>>>>>>>>>>> thumbnail+blockchain API 启动完成"
+    ),
   });
-  console.log(stderr, stdout);
-  const { auraSecret, auraAccount, granSecret, granAccount } =
-    extractBlockChainKeys(stdoutInit);
-  if (keys) {
-    console.log(`当前blockchain的凭证如下，请妥善保管`);
-    console.log(chalk.red.bold("Aura Secret:"), auraSecret);
-    console.log(chalk.red.bold("Aura Account:"), auraAccount);
-    console.log(chalk.red.bold("Gran Secret:"), granSecret);
-    console.log(chalk.red.bold("Gran Account:"), granAccount);
-  }
 };
