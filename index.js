@@ -8,6 +8,7 @@ import nginxPrompt from "./cli/nginx.js";
 import minioPrompt from "./cli/minio.js";
 import blockchainPrompt from "./cli/blockchain.js";
 import thumbnailPrompt from "./cli/thumbnail.js";
+import prometheusPrompt from "./cli/prometheus-exporter.js";
 
 import { getIntranetIp } from "./cli/utils.js";
 
@@ -97,6 +98,10 @@ console.table(components);
 
 await thumbnailPrompt();
 components[5].status = "OK";
+console.table(components);
+
+await prometheusPrompt();
+components[6].status = "OK";
 console.table(components);
 
 console.log(chalk.greenBright.bold('✔ moleculy server初始化全部完成，请检查443、80、30333端口是否已经放开'));
