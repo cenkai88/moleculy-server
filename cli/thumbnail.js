@@ -10,12 +10,12 @@ const exec = util.promisify(execRaw);
 
 const spinner = ora();
 
-export default async (envId, localIp) => {
+export default async () => {
   console.log("5 ->>>>>>>>>>>>> thumbnail+blockchain API 初始化：\n");
   spinner.start("测试 thumbnail+blockchain API 中...");
   try {
     const { stdout: stdout } = await exec(
-      `curl http://${localIp}:3001/thumbnail/healthcheck`
+      `curl http://localhost:3001/thumbnail/healthcheck`
     );
     spinner.stop();
     console.log();
@@ -59,7 +59,7 @@ export default async (envId, localIp) => {
   const { stderr, stdout } = await exec(`sudo docker-compose up -d thumbnail`);
   console.log(stderr, stdout);
   const { stderr: stderrCurl, stdout: stdoutCurl } = await exec(
-    `curl http://${localIp}:3001/thumbnail/healthcheck`
+    `curl http://localhost:3001/thumbnail/healthcheck`
   );
   console.log(stderrCurl, stdoutCurl);
   spinner.stopAndPersist({

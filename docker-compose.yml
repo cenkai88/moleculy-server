@@ -39,6 +39,13 @@ services:
       - minio
       - blockchain
 
+  prometheus-exporter:
+    extends:
+      file: prometheus-exporter/compose.yml
+      service: prometheus-exporter
+    depends_on:
+      - blockchain
+
 volumes:
   minio_data:
   wireguard_config:

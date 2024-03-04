@@ -10,11 +10,11 @@ const exec = util.promisify(execRaw);
 
 const spinner = ora();
 
-export default async (envId, localIp) => {
+export default async () => {
   console.log("4 ->>>>>>>>>>>>> blockchain 初始化：\n");
   spinner.start("测试blockchain中...");
   try {
-    const { stdout: stdout } = await exec(`curl -X OPTIONS ${localIp}:9933`);
+    const { stdout: stdout } = await exec(`curl -X OPTIONS localhost:9933`);
     spinner.stop();
     console.log();
     if (
@@ -73,7 +73,7 @@ export default async (envId, localIp) => {
 
   // update phrase for blockchain API
   const placeholderMapping = {
-    $BLOCKCHAIN_PHRASE: auraSecret
+    $BLOCKCHAIN_PHRASE: `"${auraSecret}"`
   }
   await updateFile({
     placeholderMapping,

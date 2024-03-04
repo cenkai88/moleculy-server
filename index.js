@@ -7,6 +7,7 @@ import vpnPrompt from "./cli/VPN.js";
 import nginxPrompt from "./cli/nginx.js";
 import minioPrompt from "./cli/minio.js";
 import blockchainPrompt from "./cli/blockchain.js";
+import thumbnailPrompt from "./cli/thumbnail.js";
 
 import { getIntranetIp } from "./cli/utils.js";
 
@@ -41,7 +42,7 @@ let components = [
     status: "待部署",
   },
   {
-    service: "Prometheus node-exporter",
+    service: "prometheus exporter",
     status: "待部署",
   },
 ];
@@ -92,6 +93,10 @@ console.table(components);
 
 await blockchainPrompt();
 components[4].status = "OK";
+console.table(components);
+
+await thumbnailPrompt();
+components[5].status = "OK";
 console.table(components);
 
 console.log(chalk.greenBright.bold('✔ moleculy server初始化全部完成，请检查443、80、30333端口是否已经放开'));
