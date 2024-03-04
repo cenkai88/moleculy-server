@@ -12,4 +12,4 @@ services:
     volumes:
       - '/:/host:ro,rslave'
     cap_add:
-      - SYS_TIMEgi
+      - SYS_TIME
