@@ -14,13 +14,17 @@ mc mb minio/mol-file-athena-lambda-prod-normal
 mc mb minio/mol-user-team-s3-prod-favorite
 mc mb minio/mol-user-team-s3-prod-normal
 mc mb minio/mol-paper-s3-prod
-mc mb minio/app-3-prod
+mc mb minio/app-3
 mc mb minio/mol-thumbnail-prod
 mc mb minio/mol-file-main-s3-prod-agent
 mc mb minio/mol-file-athena-s3-prod-result
 
+sleep 2
+
 # Set up webhooks
 mc admin config set minio notify_webhook:1 endpoint=https://$MINIO_WEBHOOK_DOMAIN/file/minio_webhook queue_limit=0 queue_dir=""
+
+sleep 4
 
 # bucket event to trigger webhook
 mc event add minio/mol-file-athena-lambda-prod-favorite arn:minio:sqs::1:webhook --event put,delete
@@ -28,6 +32,6 @@ mc event add minio/mol-file-athena-lambda-prod-normal arn:minio:sqs::1:webhook -
 mc event add minio/mol-user-team-s3-prod-favorite arn:minio:sqs::1:webhook --event put,delete
 mc event add minio/mol-user-team-s3-prod-normal arn:minio:sqs::1:webhook --event put,delete
 mc event add minio/mol-paper-s3-prod arn:minio:sqs::1:webhook --event put
-mc event add minio/app-3-prod arn:minio:sqs::1:webhook --event put
+mc event add minio/app-3 arn:minio:sqs::1:webhook --event put
 
 mc admin service restart minio
