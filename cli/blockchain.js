@@ -75,9 +75,10 @@ export default async () => {
   const placeholderMapping = {
     $BLOCKCHAIN_PHRASE: `"${auraSecret}"`
   }
+  // the file has been renamed by minio already
   await updateFile({
     placeholderMapping,
-    filePath: "./thumbnail/compose.tmp.yml",
+    filePath: "./thumbnail/compose.yml",
     outputPath: "./thumbnail/compose.yml",
   });
 };

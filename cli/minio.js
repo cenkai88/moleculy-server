@@ -134,6 +134,15 @@ export default async (envId) => {
       console.log(`ingsh@dt的凭证如下，请妥善保管`);
       console.log(chalk.red.bold("Access Key:"), keys.accessKey);
       console.log(chalk.red.bold("Secret Key:"), keys.secretKey);
+      // the file needs to be updated by blockchain also
+      await updateFile({
+        placeholderMapping: {
+          $MINIO_KEY: keys.accessKey,
+          $MINIO_SECRET: keys.secretKey,
+        },
+        filePath: "../thumbnail/compose.tmp.yml",
+        outputPath: "./thumbnail/compose.yml",
+      });
     }
   }
 };
