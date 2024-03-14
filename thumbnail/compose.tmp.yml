@@ -17,7 +17,7 @@ services:
       ORI_TEAM_FAV_BUCKET_NAME: mol-user-team-s3-prod-favorite
       ORI_PAPER_BUCKET_NAME: mol-paper-s3-prod
       THUMBNAIL_BUCKET_NAME: mol-thumbnail-prod
-      MINIO_KEY: minioadmin
-      MINIO_SECRET: minioadmin
+      MINIO_KEY: $MINIO_KEY
+      MINIO_SECRET: $MINIO_SECRET
       MINIO_ENDPOINT: http://localhost:9001
       BLOCKCHAIN_PHRASE: $BLOCKCHAIN_PHRASE

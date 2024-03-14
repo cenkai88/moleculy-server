@@ -11,6 +11,11 @@ services:
       file: minio/compose.yml
       service: minio
 
+  yxys-ca:
+    extends:
+      file: yxys-ca/compose.yml
+      service: yxys-ca
+
   minio-init:
     extends:
       file: minio/compose.yml

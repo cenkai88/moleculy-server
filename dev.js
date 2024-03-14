@@ -1,15 +1,8 @@
 import inquirer from "inquirer";
 import figlet from "figlet";
 import chalk from "chalk";
-import hostile from "hostile";
 
-import vpnPrompt from "./cli/VPN.js";
 import yxysCAPrompt from "./cli/yxys-ca.js";
-import nginxPrompt from "./cli/nginx.js";
-import minioPrompt from "./cli/minio.js";
-import blockchainPrompt from "./cli/blockchain.js";
-import thumbnailPrompt from "./cli/thumbnail.js";
-import prometheusPrompt from "./cli/prometheus-exporter.js";
 
 import { getIntranetIp } from "./cli/utils.js";
 
@@ -68,44 +61,11 @@ const { ip } = await inquirer.prompt([
   },
 ]);
 
-hostile.set(ip, `minio-${envId}.moleculy.com`);
-hostile.set(ip, `web-${envId}.moleculy.com`);
-hostile.set(ip, `api-${envId}.moleculy.com`);
-hostile.set(ip, `application-${envId}.moleculy.com`);
-hostile.set(ip, `app-api-${envId}.moleculy.com`);
-hostile.set(ip, `ws-${envId}.moleculy.com`);
-hostile.set(ip, `cms-${envId}.moleculy.com`);
-hostile.set(ip, `thumbnail-${envId}.moleculy.com`);
-
-console.log("设置DNS完成");
-
-await vpnPrompt();
-components[0].status = "OK";
-console.table(components);
-
 // ca
 await yxysCAPrompt(envId, ip);
 components[1].status = "OK";
 console.table(components);
 
-await nginxPrompt(envId, ip);
-components[2].status = "OK";
-console.table(components);
 
-await minioPrompt(envId);
-components[3].status = "OK";
-console.table(components);
-
-await blockchainPrompt();
-components[4].status = "OK";
-console.table(components);
-
-await thumbnailPrompt();
-components[5].status = "OK";
-console.table(components);
-
-await prometheusPrompt();
-components[6].status = "OK";
-console.table(components);
 
 console.log(chalk.greenBright.bold('✔ moleculy server初始化全部完成，请检查443、80、30333端口是否已经放开'));
