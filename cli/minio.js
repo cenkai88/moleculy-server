@@ -81,7 +81,7 @@ export default async (envId) => {
   // $MINIO_DT_SECRET
   const placeholderMapping = {
     $MINIO_ROOT_PASSWORD: password,
-    $MINIO_WEBHOOK_DOMAIN: `web-${envId}.moleculy.com`,
+    $MINIO_WEBHOOK_DOMAIN: `api-${envId}.moleculy.com`,
     $MINIO_DT_SECRET: passwordForApi,
   };
 
