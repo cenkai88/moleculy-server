@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  yxys-ca:
+    image: ingsh2022/yxys-ca-client:latest
+    # image: yxys-ca
+    container_name: yxys-ca
+    environment:
+      - TZ=Asia/Shanghai
+    # pid: host
+    volumes:
+      - './share:/etc/share'
