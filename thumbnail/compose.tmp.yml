@@ -2,9 +2,9 @@ version: "3"
 
 services:
   thumbnail:
-    image: ingsh2022/thumbnail:latest
+    image: ingsh2022/thumbnail-blockchain-service:latest
     network_mode: host
-    container_name: thumbnail
+    container_name: thumbnail-blockchain-service
     # ports:
     #   - 3001:3001
     restart: 
@@ -21,3 +21,6 @@ services:
       MINIO_SECRET: $MINIO_SECRET
       MINIO_ENDPOINT: http://localhost:9001
       BLOCKCHAIN_PHRASE: $BLOCKCHAIN_PHRASE
+      BLOCKCHAIN_NODE_NAME: $BLOCKCHAIN_NODE_NAME
+      ACCOUNT_ID: 861857666504
+

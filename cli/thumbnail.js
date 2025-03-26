@@ -12,8 +12,16 @@ const spinner = ora();
 
 export default async () => {
   console.log("5 ->>>>>>>>>>>>> thumbnail+blockchain API 初始化：\n");
-  spinner.start("测试 thumbnail+blockchain API 中...");
+  const { blockchainNodeName } = await inquirer.prompt([
+    {
+      type: "input",
+      name: "blockchainNodeName",
+      message: "请输入区块链节点名称，一般是poe-xxx, 默认: poe-unknown",
+      default: "poe-unknown",
+    },
+  ]);
   try {
+    spinner.start("测试 thumbnail+blockchain API 中...");
     const { stdout: stdout } = await exec(
       `curl http://localhost:3001/thumbnail/healthcheck`
     );
@@ -47,12 +55,16 @@ export default async () => {
     chalk.blue.bold("5 ->>>>>>>>>>>>> 创建新 thumbnail+blockchain API 实例")
   );
 
-  // update compose yml
-  // await updateFile({
-  //   placeholderMapping,
-  //   filePath: "./blockchain/blockchain.tmp.yml",
-  //   outputPath: "./blockchain/blockchain.yml",
-  // });
+  // update phrase for blockchain API
+  const placeholderMapping = {
+    $BLOCKCHAIN_NODE_NAME: `"${blockchainNodeName}"`,
+  };
+  // the file has been renamed by minio already
+  await updateFile({
+    placeholderMapping,
+    filePath: "./thumbnail/compose.yml",
+    outputPath: "./thumbnail/compose.yml",
+  });
 
   // compose up
   spinner.start("启动中...");
