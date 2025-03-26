@@ -34,7 +34,7 @@ export default async (envId) => {
   spinner.start("尝试查看minio实例中...");
   try {
     const { stderr: pingErr0, stdout: pingOut0 } = await exec(
-      "curl -f http://localhost:9000/minio/health/live"
+      "curl -f http://localhost:9000/minio/health/live",
     );
     spinner.stop();
     console.log();
@@ -81,7 +81,7 @@ export default async (envId) => {
   // $MINIO_DT_SECRET
   const placeholderMapping = {
     $MINIO_ROOT_PASSWORD: password,
-    $MINIO_WEBHOOK_DOMAIN: `web-${envId}.moleculy.com`,
+    $MINIO_WEBHOOK_DOMAIN: `api-${envId}.moleculy.com`,
     $MINIO_DT_SECRET: passwordForApi,
   };
 
@@ -121,7 +121,7 @@ export default async (envId) => {
 
   if (confirm) {
     const { stderr: stderrInit, stdout: stdoutInit } = await exec(
-      `sudo docker-compose up minio-init`
+      `sudo docker-compose up minio-init`,
     );
     console.log(stderrInit, stdoutInit);
     spinner.stopAndPersist({
@@ -134,13 +134,13 @@ export default async (envId) => {
       console.log(`ingsh@dt的凭证如下，请妥善保管`);
       console.log(chalk.red.bold("Access Key:"), keys.accessKey);
       console.log(chalk.red.bold("Secret Key:"), keys.secretKey);
-      // the file needs to be updated by blockchain also
+      const placeholderMapping = {
+        $MINIO_KEY: keys.accessKey,
+        $MINIO_SECRET: keys.secretKey,
+      };
       await updateFile({
-        placeholderMapping: {
-          $MINIO_KEY: keys.accessKey,
-          $MINIO_SECRET: keys.secretKey,
-        },
-        filePath: "../thumbnail/compose.tmp.yml",
+        placeholderMapping,
+        filePath: "./thumbnail/compose.tmp.yml",
         outputPath: "./thumbnail/compose.yml",
       });
     }
